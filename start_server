@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec python -m bottle --server gevent --bind 0.0.0.0:8080 --debug app:dashboard

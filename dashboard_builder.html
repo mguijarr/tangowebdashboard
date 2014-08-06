@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+  <head> 
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+    <META HTTP-EQUIV="Pragma-directive" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Directive" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <title>Tango Attributes Dashboard App</title>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"></link>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-treeview.js"></script>  
+    <link rel="stylesheet" href="css/bootstrap-treeview.css"></link>
+    <script src="js/dashboard.js"></script>
+  </head>
+  <style type="text/css">
+    #panels_list_1 .panel-heading {
+      cursor: move;
+    }  
+    #panels_list_2 .panel-heading {
+      cursor: move;
+    }  
+    #panels_list_3 .panel-heading {
+      cursor: move;
+    }  
+    #panels_list_4 .panel-heading {
+      cursor: move;
+    }  
+  </style>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Tango Dashboard App</a>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" id="tangodb_text" class="form-control" placeholder="Tango DB">
+          </div>
+          <button class="btn btn-default" id="connect_button">Connect</button>
+        </form> 
+        <form class="navbar-form navbar-right">
+          <button class="btn btn-default" id="clear_button">Clear panels</button>
+        </form>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="col-md-2">
+        <div id="tree"></div>
+      </div>
+      <div class="col-md-2">
+        <ul class="list-group" id="attributes_list">
+        </ul>
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-2">
+            <ul class="list-unstyled panel_column" id="panels_list_1"></ul>
+          </div>
+          <div class="col-md-2">
+            <ul class="list-unstyled panel_column" id="panels_list_2"></ul>
+          </div>
+          <div class="col-md-2">
+            <ul class="list-unstyled panel_column" id="panels_list_3"></ul>
+          </div>
+          <div class="col-md-2">
+            <ul class="list-unstyled panel_column" id="panels_list_4"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
