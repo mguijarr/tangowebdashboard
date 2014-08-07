@@ -66,7 +66,7 @@ $(document).ready(function() {
         n_panels = n_panels + 1;
         var col_no = 1+((n_panels-1)% 4);
         var attr_id = data["id"];
-        $("#panels_list_"+col_no).append("<li class='panel panel-info'><div class='panel-heading'>"+title+"</div><div class='panel-body' id='attr_value_"+attr_id+"'>"+data["value"]+"</div></li>");
+        $("#panels_list_"+col_no).append("<li class='panel panel-info widget'><div class='panel-heading'>"+title+"</div><div class='panel-body' id='attr_value_"+attr_id+"'>"+data["value"]+"</div></li>");
       };
 
       $(function() {
@@ -75,6 +75,8 @@ $(document).ready(function() {
           connectWith: ".panel_column", 
           handle: ".panel-heading",
         });
+
+        $(".widget").resizable({ handles: "n,e,s,w" });
       });
 });
 
