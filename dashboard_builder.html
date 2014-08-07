@@ -9,26 +9,51 @@
     <title>Tango Attributes Dashboard App</title>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/black-tie/jquery-ui.css"></link>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"></link>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="js/bootstrap-treeview.js"></script>  
     <link rel="stylesheet" href="css/bootstrap-treeview.css"></link>
+    <script src="js/jquery.jspanel.min.js"></script>
+    <link rel="stylesheet" href="css/jsPanel.css"></link>
     <script src="js/dashboard.js"></script>
   </head>
   <style type="text/css">
-    #panels_list_1 .panel-heading {
+    #panels .panel-heading {
       cursor: move;
-    }  
-    #panels_list_2 .panel-heading {
-      cursor: move;
-    }  
-    #panels_list_3 .panel-heading {
-      cursor: move;
-    }  
-    #panels_list_4 .panel-heading {
-      cursor: move;
-    }  
+    } 
+ 
+    html,body,.container
+    {
+        height:100%;
+    }
+    .container
+    {
+        display:table;
+        width: 100%;
+        margin-top: -50px;
+        padding: 10px 0 0 0; /*set left/right padding according to needs*/
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .row
+    {
+        height: 100%;
+        display: table-row;
+    }
+    .col-md-2
+    {
+        display: table-cell;
+        /*background: pink;*/
+  	float: none;
+    }
+    .col-md-8
+    {
+        display: table-cell;
+        /*background: yellow;*/
+  	float: none;
+    }
   </style>
   <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -45,30 +70,16 @@
         </form>
       </div>
     </nav>
-    <div class="container-fluid">
-      <div class="col-md-2">
-        <div id="tree"></div>
-      </div>
-      <div class="col-md-2">
-        <ul class="list-group" id="attributes_list">
-        </ul>
-      </div>
-      <div class="col-md-8">
-        <div class="row">
-          <div class="col-md-2">
-            <ul class="list-unstyled panel_column" id="panels_list_1"></ul>
-          </div>
-          <div class="col-md-2">
-            <ul class="list-unstyled panel_column" id="panels_list_2"></ul>
-          </div>
-          <div class="col-md-2">
-            <ul class="list-unstyled panel_column" id="panels_list_3"></ul>
-          </div>
-          <div class="col-md-2">
-            <ul class="list-unstyled panel_column" id="panels_list_4"></ul>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2" id="tree">
         </div>
-      </div>
+        <div class="col-md-2">
+            <ul class="list-group" id="attributes_list"></ul>
+        </div>
+        <div class="col-md-8" id="panels">
+        </div>
+      </div>  
     </div>
   </body>
 </html>

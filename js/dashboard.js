@@ -55,28 +55,20 @@ $(document).ready(function() {
       });
 
       var clearPanels = function() {
-        n_panels = 0;
-        $("#panels_list_1").empty();
-        $("#panels_list_2").empty();
-        $("#panels_list_3").empty();
-        $("#panels_list_4").empty();
+        $("#panels").empty();
+      };
       };
 
       var createPanel = function(title, data) {
-        n_panels = n_panels + 1;
-        var col_no = 1+((n_panels-1)% 4);
         var attr_id = data["id"];
-        $("#panels_list_"+col_no).append("<li class='panel panel-info widget'><div class='panel-heading'>"+title+"</div><div class='panel-body' id='attr_value_"+attr_id+"'>"+data["value"]+"</div></li>");
+        var attr_div_id = "attr_value_"+attr_id;
+        $.jsPanel({ bootstrap: "info", title: title, selector: "#panels", content: data.value, id: attr_div_id });
+        $("#"+attr_div_id).draggable({ containment: "parent" });
+        $("#"+attr_div_id).resizable({ containment: "parent" });
+        //set_attr_value(attr_id, data);
       };
 
       $(function() {
-        var panelList = $(".panel_column"); 
-        panelList.sortable({
-          connectWith: ".panel_column", 
-          handle: ".panel-heading",
-        });
-
-        $(".widget").resizable({ handles: "n,e,s,w" });
       });
 });
 

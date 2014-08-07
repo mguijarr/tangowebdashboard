@@ -34,6 +34,10 @@ def send_static_res(url):
 def send_static_res(url):
   return bottle.static_file(url, root=os.path.join(os.path.dirname(__file__), 'css'))
 
+@dashboard.route('/images/<url:re:.+>')
+def send_static_res(url):
+  return bottle.static_file(url, root=os.path.join(os.path.dirname(__file__), 'images'))
+
 @dashboard.get("/fetchFromDatabase")
 def fetch_from_tango_db(): 
   servers_tree = []
