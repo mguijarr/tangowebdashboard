@@ -47,7 +47,7 @@ $(document).ready(function() {
               attribute_change_evsource = new EventSource("attributeChanges");
               attribute_change_evsource.onmessage = function(event) {
                 var json_data = $.parseJSON(event.data);
-                $("#attr_value_"+json_data.id).html(json_data.value);
+                set_attr_value(json_data.id, jsdon_data);
               };
             };
           });
@@ -57,6 +57,9 @@ $(document).ready(function() {
       var clearPanels = function() {
         $("#panels").empty();
       };
+
+      var set_attr_value = function(attr_id, json_data) {
+            $("#attr_value_"+attr_id).html(json_data.value);
       };
 
       var createPanel = function(title, data) {
