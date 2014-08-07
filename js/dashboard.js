@@ -16,6 +16,7 @@ $(document).ready(function() {
         
         $.get("fetchFromDatabase", { "tango_db": tango_db }, function(data) {
             //clearPanels();
+            data.showBorder = false;
             $("#tree").treeview(data);
         });
       });
