@@ -1,83 +1,63 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
   <head> 
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-    <META HTTP-EQUIV="Pragma-directive" CONTENT="no-cache">
-    <META HTTP-EQUIV="Cache-Directive" CONTENT="no-cache">
-    <META HTTP-EQUIV="Expires" CONTENT="0">
     <title>Tango Attributes Dashboard App</title>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/black-tie/jquery-ui.css"></link>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"></link>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"></link>
     <script src="js/bootstrap-treeview.js"></script>  
     <link rel="stylesheet" href="css/bootstrap-treeview.css"></link>
-    <script src="js/jquery.jspanel.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"></link>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/black-tie/jquery-ui.css"></link>
+    <!--<script src="js/jquery.jspanel.min.js"></script>
     <link rel="stylesheet" href="css/jsPanel.css"></link>
+    -->
     <script src="js/dashboard.js"></script>
   </head>
-  <style type="text/css">
-    #panels .panel-heading {
-      cursor: move;
-    } 
- 
-    html,body,.container
-    {
-        height:100%;
-    }
-    .container
-    {
-        display:table;
-        width: 100%;
-        margin-top: -50px;
-        padding: 10px 0 0 0; /*set left/right padding according to needs*/
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-    .row
-    {
-        height: 100%;
-        display: table-row;
-    }
-    .col-md-2
-    {
-        display: table-cell;
-        /*background: pink;*/
-  	float: none;
-    }
-    .col-md-8
-    {
-        display: table-cell;
-        /*background: yellow;*/
-  	float: none;
-    }
-  </style>
-  <body>
+  <header>
     <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
+      <div class="container-fluid">      
         <a class="navbar-brand" href="#">Tango Dashboard App</a>
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input type="text" id="tangodb_text" class="form-control" placeholder="Tango DB">
-          </div>
-          <button class="btn btn-default" id="connect_button">Connect</button>
-        </form> 
+        <button class="btn btn-default navbar-btn" id="toggle_button">
+          toggle devices tree 
+          <span class="caret"></span>
+        </button>
         <form class="navbar-form navbar-right">
-          <button class="btn btn-default" id="clear_button">Clear panels</button>
+          <button class="btn btn-default" id="save_button">Save dashboard</button>
+          <button class="btn btn-default" id="clear_button">Reset</button>
         </form>
       </div>
     </nav>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-2" id="tree">
+  </header>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="col-md-3" id="sidebar">
+          <div id="treeview">
+            <span class="label label-default">Devices tree</span>
+            <div class="input-group">
+              <input type="text" id="tangodb_text" class="form-control" placeholder="Tango DB"></input>
+              <span class="input-group-btn">
+                <button class="btn btn-default" id="connect_button">Connect</button>
+              </span>
+            </div>
+            <div id="tree"></div>
+          </div>
+          <div id="attributes"> 
+            <h5><a href="#" id="back_to_devices_tree_link">Back to devices</a></h5>
+            <span class="label label-default">Attributes list</span>
+            <div class="panel panel-default">
+              <div class="panel-heading" id="device_name">
+                Device_name
+              </div>
+              <div class="panel-body">
+                <ul class="list-group" id="attributes_list"></ul>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-2">
-            <ul class="list-group" id="attributes_list"></ul>
-        </div>
-        <div class="col-md-8" id="panels">
+        <div class="col-md-9" id="panels" style="height:3000px;">
         </div>
       </div>  
     </div>

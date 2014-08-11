@@ -1,12 +1,24 @@
 $(document).ready(function() {
-      var n_panels = 0;
+      var servers_devices_data = {};
       var attribute_change_evsource = null;
 
       $.ajaxSetup({ cache: false, dataType: "json" });
 
+      $("#attributes").toggle();
+      $("#back_to_devices_tree_link").on("click", function(event) {
+        event.preventDefault(); 
+        $("#attributes").toggle();
+        $("#treeview").toggle();
+      });
+
       $("#clear_button").on("click", function(event) {
         event.preventDefault(); //this has to be done otherwise full page is reloaded! Why?
         clearPanels();
+      });
+
+      $("#toggle_button").on("click", function(event) {
+        event.preventDefault(); 
+        $("#sidebar").toggle();
       });
 
       $("#connect_button").on("click", function(event) {
@@ -15,9 +27,9 @@ $(document).ready(function() {
         var tango_db = $("#tangodb_text").val();
         
         $.get("fetchFromDatabase", { "tango_db": tango_db }, function(data) {
-            //clearPanels();
+            $("#attributes_list").empty();
             data.showBorder = false;
-            $("#tree").treeview(data);
+            $("#tree").treeview({ data: data, levels:1, nodeIcon:"glyphicon glyphicon-cog" });
         });
       });
 
@@ -26,14 +38,19 @@ $(document).ready(function() {
         var device_fqdn = tango_db+"/"+node.text;
 
         $.get("retrieveAttributes", { "device_fqdn": device_fqdn }, function(data) {
-          $("#attributes_list").empty();
           for(var i=0; i<data.length; i++) {
             var attr_name = data[i];
-            var read_attribute_link = "<a class='attribute_link' href='readAttribute?device_fqdn="+device_fqdn+"&attribute="+attr_name+"'>"+attr_name+"</a>"
+            
+            var read_attribute_link = "<a class='attribute_link' href='readAttribute?device_fqdn="+device_fqdn+"&attribute="+attr_name+"'>"+attr_name+"</a><br>"
             $("#attributes_list").append("<li class='list-group-item'>"+read_attribute_link+"</li>");
             $("#attributes_list li:last-child a").data("device_fqdn", device_fqdn);
             $("#attributes_list li:last-child a").data("attribute", attr_name);
           };
+
+          $("#treeview").toggle();
+          $("#device_name").html(device_fqdn);
+          $("#attributes").toggle();
+
           $(".attribute_link").on("click", function(event) {
             event.preventDefault();
  
@@ -66,10 +83,17 @@ $(document).ready(function() {
       var createPanel = function(title, data) {
         var attr_id = data["id"];
         var attr_div_id = "attr_value_"+attr_id;
-        $.jsPanel({ bootstrap: "info", title: title, selector: "#panels", content: data.value, id: attr_div_id });
+        /*$.jsPanel({ bootstrap: "info", title: title, selector: "#panels", content: data.value, id: attr_div_id });
         $("#"+attr_div_id).draggable({ containment: "parent" });
         $("#"+attr_div_id).resizable({ containment: "parent" });
         //set_attr_value(attr_id, data);
+        */
+        $("#panels").append("<div class='col-md-3 dashboard_panel'><div class='panel panel-info'> \
+          <div class='panel-heading'>"+title+"</div> \
+          <div class='panel-body'>"+data.value+"</div> \
+          </div></div>");
+        $("#panels").sortable();
+        $(".dashboard_panel").resizable();
       };
 
       $(function() {

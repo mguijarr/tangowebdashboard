@@ -68,7 +68,7 @@ def fetch_from_tango_db():
             child_node["nodes"].append({"text": class_name, "selectable": False, "nodes":[{"text":dev}]})
       node["nodes"].append(child_node)
 
-  return json.dumps({ "data": servers_tree, "levels":1, "nodeIcon":"glyphicon glyphicon-cog" })
+  return json.dumps(servers_tree) #, "levels":1, "nodeIcon":"glyphicon glyphicon-cog" })
 
 
 @dashboard.get("/retrieveAttributes")
