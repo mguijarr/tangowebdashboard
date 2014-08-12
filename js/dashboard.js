@@ -83,17 +83,19 @@ $(document).ready(function() {
       var createPanel = function(title, data) {
         var attr_id = data["id"];
         var attr_div_id = "attr_value_"+attr_id;
-        /*$.jsPanel({ bootstrap: "info", title: title, selector: "#panels", content: data.value, id: attr_div_id });
+        $.jsPanel({ bootstrap: "info", title: title, selector: "#panels", content: data.value, id: attr_div_id });
         $("#"+attr_div_id).draggable({ containment: "parent" });
         $("#"+attr_div_id).resizable({ containment: "parent" });
         //set_attr_value(attr_id, data);
-        */
+       
+        /* 
         $("#panels").append("<div class='col-md-3 dashboard_panel'><div class='panel panel-info'> \
           <div class='panel-heading'>"+title+"</div> \
           <div class='panel-body'>"+data.value+"</div> \
           </div></div>");
         $("#panels").sortable();
         $(".dashboard_panel").resizable();
+        */
       };
 
       $(function() {
