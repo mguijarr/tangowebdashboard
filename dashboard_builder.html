@@ -10,11 +10,23 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"></link>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/black-tie/jquery-ui.css"></link>
-    <!--<script src="js/jquery.jspanel.min.js"></script>
-    <link rel="stylesheet" href="css/jsPanel.css"></link>
-    -->
     <script src="js/dashboard.js"></script>
   </head>
+  <style type="text/css">
+    .dashboard_panel {
+        min-height: 200px;
+    }
+    .dashboard_panel .panel-heading {
+        cursor: move;
+    }
+    .dashboard_panel .panel-body {
+        min-height:200px;
+        height:100%;
+    }
+    .col-md-3 {
+        background-color: yellow;
+    }
+  </style>
   <header>
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">      
@@ -57,7 +69,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-9" id="panels" style="height:3000px;">
+	<div class="col-md-12" id="panels"> <!-- style="height:3000px;">-->
         </div>
       </div>  
     </div>
