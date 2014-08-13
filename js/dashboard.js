@@ -16,11 +16,6 @@ $(document).ready(function() {
         clearPanels();
       });
 
-      $("#toggle_button").on("click", function(event) {
-        event.preventDefault(); 
-        $("#sidebar").toggle();
-      });
-
       $("#connect_button").on("click", function(event) {
         event.preventDefault();
 
