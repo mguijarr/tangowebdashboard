@@ -79,15 +79,15 @@ $(document).ready(function() {
         var attr_id = data["id"];
         var attr_div_id = "attr_value_"+attr_id;
 
-        $("#panels").append("<div class='col-md-3'><div class='panel panel-info dashboard-panel'> \
+        $("#panels").append("<div class='col-md-3 dashboard-widget'><div class='panel panel-info dashboard-panel'> \
           <div class='panel-heading'>"+title+"</div> \
           <div class='panel-body'><h1 id='"+attr_div_id+"'#VALUE?</h1></div> \
           </div></div>");
         $("#panels").sortable({
-          handle: $(".dashboard-panel .panel-heading");
+          handle: $(".dashboard-panel .panel-heading")
         });
-        $(".col-md-3").resizable({
-          stop: function() { $(this).height("auto"); 
+        $(".dashboard-widget").resizable({
+          stop: function() { $(this).height("auto"); }
         });
      
         set_attr_value(attr_id, data);
