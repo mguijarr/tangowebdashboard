@@ -110,6 +110,21 @@ def pytango_to_python(attribute_value):
     return str(attribute_value)
   return attribute_value
 
+def attribute_to_dict(read_attr):
+  if read_attr.data_format == PyTango.SPECTRUM:
+      data_type = "spectrum"
+      if read_attr.dim_y == 0:
+        value = list(enumerate(read_attr.value))
+      else:
+        raise RuntimeError("don't know how to handle spectrum with dim_y>0")
+  elif read_attr.data_format == PyTango.SCALAR:
+      data_type = "scalar"
+      value = pytango_to_python(read_attr.value)
+  else:
+      data_type="unknown"
+      value = pytango_to_python(read_attr.value)
+  return { "type": data_type, "value": value }
+
 @dashboard.get("/readAttribute")
 def read_attribute():
   device_fqdn =  bottle.request.GET["device_fqdn"]
@@ -117,7 +132,7 @@ def read_attribute():
   device_proxy = DEVICES[device_fqdn]
  
   device_state = str(device_proxy.State())  
-  attribute_value = pytango_to_python(device_proxy.read_attribute(attribute_name).value)
+  attribute_dict = attribute_to_dict(device_proxy.read_attribute(attribute_name))
 
   attribute_change_ev = AttributeChangeEvent()
   try:
@@ -125,7 +140,8 @@ def read_attribute():
   except:
       print 'cannot start polling'
 
-  return json.dumps({ "state": device_state, "value": attribute_value, "id":id(attribute_change_ev) })
+  attribute_dict.update({ "state": device_state, "id": id(attribute_change_ev) })
+  return json.dumps(attribute_dict)
 
 @dashboard.route("/attributeChanges")
 def attribute_changes():
@@ -134,6 +150,7 @@ def attribute_changes():
   bottle.response.cache_control = "no-cache"
   while True:
     attr_id, new_event = threadsafe_queue.get()
-    value = pytango_to_python(new_event.attr_value.value)
-    yield "data: %s\n\n" % json.dumps({"id": attr_id, "value":value })
+    attribute_dict = attribute_to_dict(new_event.attr_value)
+    attribute_dict.update({ "id": attr_id })
+    yield "data: %s\n\n" % json.dumps(attribute_dict)
 
