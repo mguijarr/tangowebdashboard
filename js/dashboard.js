@@ -1,6 +1,7 @@
 $(document).ready(function() {
       var servers_devices_data = {};
       var attribute_change_evsource = null;
+      var spectrum_attrs = {};
 
       $.ajaxSetup({ cache: false, dataType: "json" });
 
@@ -72,25 +73,52 @@ $(document).ready(function() {
       };
 
       var set_attr_value = function(attr_id, json_data) {
-            $("#attr_value_"+attr_id).html(json_data.value);
+            var attr_div_id = "#attr_panel_"+attr_id;
+            if (json_data.type == "spectrum") {
+              if (document.getElementById("spectrum_"+attr_id) == null) {
+                $(attr_div_id).html("<div class='dashboard-panel-content' id='spectrum_"+attr_id+"''></div>");
+                var g = $.plot("#spectrum_"+attr_id, [json_data.value])
+                spectrum_attrs[attr_id]={ "graph": g, "data": json_data.value };
+              } else {
+              }
+            } else {
+              $(attr_div_id).html("<div class='dashboard-panel-content'><h1>"+json_data.value+"</h1></div>");
+            }
       };
 
       var createPanel = function(title, data) {
         var attr_id = data["id"];
-        var attr_div_id = "attr_value_"+attr_id;
+        var attr_div_id = "attr_panel_"+attr_id;
 
-        $("#panels").append("<div class='col-md-3 dashboard-widget'><div class='panel panel-info dashboard-panel'> \
+        var $new_panel = $("<div class='panel panel-info dashboard-panel'> \
           <div class='panel-heading'>"+title+"</div> \
-          <div class='panel-body'><h1 id='"+attr_div_id+"'#VALUE?</h1></div> \
-          </div></div>");
-        $("#panels").sortable({
+          <div class='panel-body' id='"+attr_div_id+"'</div></div></div>");
+
+        var $container = $("#panels")
+        $container.append($new_panel).packery("appended", $new_panel); 
+        $container.packery();
+
+        var $panelItems = $container.find(".dashboard-panel");
+        $panelItems.draggable({ 
           handle: $(".dashboard-panel .panel-heading")
         });
-        $(".dashboard-widget").resizable({
-          stop: function() { $(this).height("auto"); }
+        $container.packery("bindUIDraggableEvents", $panelItems);
+   
+        $(".dashboard-panel").resizable({ 
+          stop: function() { 
+            $("#panels").packery();
+          }
         });
      
         set_attr_value(attr_id, data);
       };
+
+      $(function() {
+        var $container = $("#panels");
+        $container.packery({
+          gutter: 10,
+          itemSelector: ".dashboard-panel"
+        });
+      });
 });
 

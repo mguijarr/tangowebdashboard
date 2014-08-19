@@ -11,6 +11,9 @@
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/black-tie/jquery-ui.css"></link>
     <script src="js/dashboard.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.resize.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/packery/1.1.2/packery.pkgd.min.js" type="text/javascript"></script>
   </head>
   <style type="text/css">
     .dashboard-panel {
@@ -22,9 +25,15 @@
     .dashboard-panel .panel-body {
         min-height:200px;
         height:100%;
+        position: relative;
     }
-    . dashboard-widget {
+    .dashboard-panel-content {
+        position: absolute;
         background-color: yellow;
+        top: 10px;
+        bottom: 60px;
+        left: 10px;
+        right: 10px;
     }
   </style>
   <header>
