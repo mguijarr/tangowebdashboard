@@ -29,6 +29,11 @@ $(document).ready(function() {
         });
       });
 
+      $("#add_panel_button").on("click", function(event) {
+        event.preventDefault();
+        createPanel("Unnamed",{});
+      });
+
       $('#tree').on('nodeSelected', function(event, node) {
         var tango_db = $("#tangodb_text").val();
         var device_fqdn = tango_db+"/"+node.text;
