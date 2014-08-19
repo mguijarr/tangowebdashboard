@@ -94,14 +94,17 @@ def read_event_from_queue():
   threadsafe_queue.put(event)
 
 class AttributeChangeEvent:
+  ID=0
   events_queue = Queue()
   watcher = gevent.get_hub().loop.async()
   watcher.start(read_event_from_queue)
 
   def __init__(self):
-    pass
+    AttributeChangeEvent.ID += 1
+    self.attr_id = AttributeChangeEvent.ID
+
   def push_event(self, event):
-    AttributeChangeEvent.events_queue.put((id(self), event))
+    AttributeChangeEvent.events_queue.put((self.attr_id, event))
     AttributeChangeEvent.watcher.send()
 
 def pytango_to_python(attribute_value):
