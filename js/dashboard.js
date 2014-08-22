@@ -37,6 +37,8 @@ $(document).ready(function() {
       $('#tree').on('nodeSelected', function(event, node) {
         var tango_db = $("#tangodb_text").val();
         var device_fqdn = tango_db+"/"+node.text;
+       
+        $("#attributes_list").empty();
 
         $.get("retrieveAttributes", { "device_fqdn": device_fqdn }, function(data) {
           for(var i=0; i<data.length; i++) {
