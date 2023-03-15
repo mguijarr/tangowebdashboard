@@ -3,7 +3,7 @@ import gevent
 import gevent.event
 import gevent.queue
 import gevent.server
-from gevent.wsgi import WSGIServer
+from gevent.pywsgi import WSGIServer
 import bottle
 import socket
 import json
@@ -23,8 +23,8 @@ def tango_dashboard_builder():
     tango_db = bottle.request.GET["tango_db"]
   except:
     tango_db = None
-  index_html = file(os.path.join(os.path.dirname(__file__), "dashboard_builder.html"), 'r')
-  return index_html.read()
+  with open(os.path.join(os.path.dirname(__file__), "dashboard_builder.html"), 'r') as index_html:
+      return index_html.read()
 
 @dashboard.route('/js/<url:re:.+>')
 def send_static_res(url):
@@ -53,7 +53,7 @@ def fetch_from_tango_db():
         continue
     else:
         servers_dict.setdefault(server, []).append(device)
-  for server, devices in servers_dict.iteritems():
+  for server, devices in servers_dict.items():
     node = { "text": server, "nodes":[], "selectable": False }
     servers_tree.append(node)
      
@@ -61,8 +61,8 @@ def fetch_from_tango_db():
       child_node = { "text": device, "nodes": [], "selectable": False }
       classes = db.DbGetDeviceClassList("%s/%s" % (server, device))
       if classes:
-          devices_classes = dict(zip(classes[3::2], classes[2::2]))
-          for class_name, dev in devices_classes.iteritems():
+          devices_classes = dict(list(zip(classes[3::2], classes[2::2])))
+          for class_name, dev in devices_classes.items():
             if class_name == "DServer":
               continue
             child_node["nodes"].append({"text": class_name, "selectable": False, "nodes":[{"text":dev}]})
@@ -74,7 +74,7 @@ def fetch_from_tango_db():
 @dashboard.get("/retrieveAttributes")
 def retrieve_attributes():
   device_fqdn = bottle.request.GET["device_fqdn"]
-  print "retrieving attributes from", device_fqdn
+  print("retrieving attributes from", device_fqdn)
 
   if not device_fqdn in DEVICES:
     device_proxy = DeviceProxy(device_fqdn)
@@ -96,7 +96,7 @@ def read_event_from_queue():
 class AttributeChangeEvent:
   ID=0
   events_queue = Queue()
-  watcher = gevent.get_hub().loop.async()
+  watcher = gevent.get_hub().loop.async_()
   watcher.start(read_event_from_queue)
 
   def __init__(self):
@@ -108,7 +108,7 @@ class AttributeChangeEvent:
     AttributeChangeEvent.watcher.send()
 
 def pytango_to_python(attribute_value):
-  if type(attribute_value) not in (types.StringType, types.IntType, types.FloatType):
+  if type(attribute_value) not in (bytes, int, float):
     # convert to string any type we don't understand
     return str(attribute_value)
   return attribute_value
@@ -141,7 +141,7 @@ def read_attribute():
   try:
       device_proxy.subscribe_event(attribute_name, PyTango.EventType.CHANGE_EVENT, attribute_change_ev, [])
   except:
-      print 'cannot start polling'
+      print('cannot start polling')
 
   attribute_dict.update({ "state": device_state, "id": id(attribute_change_ev) })
   return json.dumps(attribute_dict)
